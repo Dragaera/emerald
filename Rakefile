@@ -1,11 +1,5 @@
 $LOAD_PATH.unshift '.'
 
-require 'resque/tasks'
-require 'resque/scheduler/tasks'
-
-task 'resque:setup' => 'emerald:environment'
-task 'resque:scheduler' => 'resque:setup'
-
 namespace :emerald do
   desc 'Spawns an interactive console'
   task :console => :environment do |t|
@@ -17,6 +11,17 @@ namespace :emerald do
   task :environment do
     require 'config/boot'
   end
+
+  desc "Print out routes"
+  task :routes => :environment do
+    Emerald::Web::API.routes.each do |route|
+      info = route.instance_variable_get :@options
+      description = "%-40s..." % info[:description][0..39]
+      method = "%-7s" % info[:method]
+      puts "#{description}  #{method}#{info[:path]}"
+    end
+  end
+
 end
 
 # namespace :db do
@@ -82,18 +87,6 @@ namespace :spec do
 
     RSpec::Core::RakeTask.new(:all) do |t|
       t.fail_on_error = false
-      t.rspec_opts = '--format doc'
-    end
-
-    RSpec::Core::RakeTask.new(:importer) do |t|
-      t.fail_on_error = false
-      t.pattern       = 'spec/emerald/importer/**/*_spec.rb'
-      t.rspec_opts = '--format doc'
-    end
-
-    RSpec::Core::RakeTask.new(:models) do |t|
-      t.fail_on_error = false
-      t.pattern       = 'spec/emerald/models/**/*_spec.rb'
       t.rspec_opts = '--format doc'
     end
 

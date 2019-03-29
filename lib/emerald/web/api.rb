@@ -14,15 +14,28 @@ module Emerald
 
       format :json
 
-      resource :latex2png do
-
+      resource do
         desc "Renders a latex equation as PNG"
         params do
           requires :latex, type: String, desc: 'Latex body'
         end
+        get do
+          latex = params[:latex]
+          doc = LatexDocument.new(latex: latex)
+          out = {}
 
-        get :index do
-          'hi'
+          begin
+            image = doc.to_image
+
+            content_type 'application/png'
+            env['api.format'] = :binary
+            header 'Content-Disposition', "attachment; filename*=UTF-8''#{ URI.escape(image) }"
+            body File.binread(image)
+          rescue RuntimeError => e
+            error!({ error: e.message }, 500)
+          ensure
+            doc.clear
+          end
         end
       end
     end

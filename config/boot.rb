@@ -18,10 +18,10 @@ require 'config/emerald'
 # Needs access to Emerald::Config
 require 'emerald'
 
-unless ENV['EMERALD_SKIP_MODELS'] == '1'
-  # Has to be loaded after DB is ready.
-  require 'emerald/models'
-end
+# unless ENV['EMERALD_SKIP_MODELS'] == '1'
+#   # Has to be loaded after DB is ready.
+#   require 'emerald/models'
+# end
 
 if Emerald::Config::Sentry.enabled?
   puts 'Configuring sentry integration.'
