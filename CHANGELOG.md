@@ -8,6 +8,8 @@ glance - what to expact from upgrading to a new version.
 
 ### Added
 
+- Basic API to render LaTeX snippets as PNG.
+
 ### Changed
 
 ### Fixed
