@@ -1,0 +1,28 @@
+version: '3'
+
+networks:
+  emerald-dev:
+  emerald-test:
+
+volumes:
+  redis-data:
+  redis-testing-data:
+
+services:
+  redis:
+    image: 'redis:4'
+    networks:
+      - emerald-dev
+    ports:
+      - 46379:6379
+    volumes:
+      - redis-data:/data
+
+  redis-test:
+    image: 'redis:4'
+    networks:
+      - emerald-test
+    ports:
+      - 46380:6379
+    volumes:
+      - redis-testing-data:/data
