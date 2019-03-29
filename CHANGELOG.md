@@ -12,6 +12,8 @@ glance - what to expact from upgrading to a new version.
 
 ### Fixed
 
+- Ensure failing PDF generation is detected.
+
 ### Security
 
 ### Deprecated

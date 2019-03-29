@@ -35,13 +35,13 @@ module Emerald
         'pdflatex', '-halt-on-error', '-output-directory', @tmp_dir, latex_file_path
       )
       @logger.debug({ msg: 'PDF rendering complete', result: result, stdout: out, stderr: err })
-      raise RuntimeError, "Error while creating pdf: #{ result.inspect }" unless result
+      raise RuntimeError, "Error while creating pdf: #{ result }" unless result.success?
 
       out, err, result = Open3.capture3(
         'convert', '-density', '600', '-quality', '100', pdf_file_path, png_file_path
       )
       @logger.debug({ msg: 'PNG conversion complete', result: result, stdout: out, stderr: err })
-      raise RuntimeError, "Error while converting PDF to PNG: #{ result.inspect }" unless result
+      raise RuntimeError, "Error while converting PDF to PNG: #{ result }" unless result.success?
 
       png_file_path
     end
