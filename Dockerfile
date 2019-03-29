@@ -4,6 +4,23 @@ LABEL maintainer="Michael Senn <michael@morrolan.ch>"
 
 EXPOSE 8080
 
+# Has to be changed if texlive were to update.
+ENV PATH "$PATH:/usr/local/texlive/2018/bin/x86_64-linux"
+
+RUN apt-get -y update && apt-get -y dist-upgrade && apt-get -y autoremove && apt-get -y install ghostscript
+# Pain in the behind, but significantly smaller than Debian's texlive-full
+# which weighs in at 2 GB.
+COPY texlive.profile /tmp/
+RUN cd /tmp \
+ && curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
+ && tar xfvz install-tl-unx.tar.gz \
+ && rm install-tl-unx.tar.gz \
+ && cd install-tl-20190227 \
+ && ./install-tl --profile=/tmp/texlive.profile \
+ && tlmgr install standalone
+
+RUN gem install bundler
+
 # Tiny Init. (Reap zombies, forward signals)
 ENV TINI_VERSION v0.17.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
