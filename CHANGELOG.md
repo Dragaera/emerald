@@ -8,8 +8,6 @@ glance - what to expact from upgrading to a new version.
 
 ### Added
 
-- Basic API to render LaTeX snippets as PNG.
-
 ### Changed
 
 ### Fixed
@@ -19,3 +17,10 @@ glance - what to expact from upgrading to a new version.
 ### Deprecated
 
 ### Removed
+
+
+## [0.1.0] - 2019-03-29
+
+### Added
+
+- Basic API to render LaTeX snippets as PNG.
