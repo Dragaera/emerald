@@ -12,13 +12,18 @@ glance - what to expact from upgrading to a new version.
 
 ### Fixed
 
-- Ensure failing PDF generation is detected.
-
 ### Security
 
 ### Deprecated
 
 ### Removed
+
+
+## [0.1.1] - 2019-03-30
+
+### Fixed
+
+- Ensure failing PDF generation is detected.
 
 
 ## [0.1.0] - 2019-03-29
