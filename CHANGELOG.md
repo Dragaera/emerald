@@ -10,6 +10,8 @@ glance - what to expact from upgrading to a new version.
 
 ### Changed
 
+- Disallow all `\write18` calls in `pdflatex` call.
+
 ### Fixed
 
 ### Security

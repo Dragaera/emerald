@@ -31,8 +31,13 @@ module Emerald
       @logger.info({ msg: 'Rendering LaTeX', latex: @latex })
       IO.write(latex_file_path, document)
 
+      # -halt-on-error: Exit with code 1 if invalid file encountered, rather
+      #                 than interactively asking for input
+      # -no-shell-escape: Completely disable \write18, default is to allow
+      #                   restricted commands
+      # -output-directory: Write to target instead of PWD
       out, err, result = Open3.capture3(
-        'pdflatex', '-halt-on-error', '-output-directory', @tmp_dir, latex_file_path
+        'pdflatex', '-halt-on-error', '-no-shell-escape', '-output-directory', @tmp_dir, latex_file_path
       )
       @logger.debug({ msg: 'PDF rendering complete', result: result, stdout: out, stderr: err })
       raise RuntimeError, "Error while creating pdf: #{ result }" unless result.success?
